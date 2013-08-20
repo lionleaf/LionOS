@@ -18,7 +18,7 @@
 
 
 #Assembled files
-build/*
+OS/build/*
 *.img
 *.list
 *.map
