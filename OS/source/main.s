@@ -19,7 +19,7 @@ loop$:
 str r1,[r0,#40]
 
 #Wait by counting down
-mov r2,#0x3F0001
+mov r2,#0x3F0000
 wait1$:
 sub r2, #1
 cmp r2, #0
@@ -30,7 +30,7 @@ bne wait1$
 str r1,[r0,#28]
 
 #Wait again
-mov r2,#0x3F0001
+mov r2,#0x3F0000
 wait2$:
 sub r2, #1
 cmp r2, #0
