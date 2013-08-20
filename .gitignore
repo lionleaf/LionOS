@@ -16,5 +16,12 @@
 *.out
 *.app
 
+
+#Assembled files
+build/*
+*.img
+*.list
+*.map
+
 #vim
 *.swp
