@@ -1,22 +1,30 @@
 .section .init
 .globl _start
 _start:
-#Load the address for GPIO
-ldr r0,=0x20200000
 
-#Enable the OK LED pin
-mov r1,#1
-lsl r1,#18
-str r1,[r0,#4]
+b main
 
-#Load a string with 1 at LED pin
-mov r1,#1
-lsl r1,#16
+.section .text
+main:
+mov sp,#0x8000
+
+#Enable LED pin
+pinNum .req r0
+pinFunc .req r1
+mov pinNum,#16
+mov pinFunc,#1
+bl SetGpioFunction
+.unreq pinNum
+.unreq pinFunc
 
 loop$:
 
 #Turn the LED on!
-str r1,[r0,#40]
+pinNum .req r0
+pinVal .req r1
+mov pinNum,#16
+mov pinVal,#0
+bl SetGpio
 
 #Wait by counting down
 mov r2,#0x3F0000
@@ -27,7 +35,9 @@ bne wait1$
 
 
 #Turn the LED off
-str r1,[r0,#28]
+mov pinNum,#16
+mov pinVal,#1
+bl SetGpio
 
 #Wait again
 mov r2,#0x3F0000
@@ -37,4 +47,7 @@ cmp r2, #0
 bne wait2$
 
 b loop$
+
+.unreq pinNum
+.unreq pinVal
 
