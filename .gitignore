@@ -25,3 +25,6 @@ OS/build/*
 
 #vim
 *.swp
+
+#scripts
+*/to_the_drive.sh
