@@ -1,5 +1,7 @@
 
 ############# Get Gpio Address #############
+# Return:
+# The address to the gpio
 .globl GetGpioAddress
 GetGpioAddress:
 ldr r0,=0x20200000
@@ -7,6 +9,9 @@ mov pc, lr
 
 
 ############# Set Gpio Function#############
+# Input:
+# r0 - The pin   (0-53)
+# r1 - Function  (0-7)
 .globl SetGpioFunction
 SetGpioFunction:
 #Check the input
@@ -33,6 +38,11 @@ pop {pc}
 
 
 ############# Set Gpio #############
+# Input:
+# r0 - Pin number to set
+# r1 - Value to set it to. False (0) or true (non-0)
+# Returns:
+# Nothing
 .globl SetGpio
 SetGpio:
 pinNum .req r0
