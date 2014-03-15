@@ -17,13 +17,28 @@ bl SetGpioFunction
 .unreq pinNum
 .unreq pinFunc
 
-loop$:
+#Load the blink pattern into r4
+#and 0 into r5
+ptrn .req r4
+ldr ptrn,=pattern
+ldr ptrn,[ptrn]
 
-#Turn the LED on!
+
 pinNum .req r0
 pinVal .req r1
+
+
+loop$:
+
+#Use and with 1 to get the last bit
+mov pinVal, ptrn
+and pinVal, #1
+
+#move the pattern to the next position
+ror ptrn, #1
+
+#Set the correct LED state!
 mov pinNum,#16
-mov pinVal,#0
 bl SetGpio
 
 #Wait by counting down
@@ -33,21 +48,14 @@ sub r2, #1
 cmp r2, #0
 bne wait1$
 
-
-#Turn the LED off
-mov pinNum,#16
-mov pinVal,#1
-bl SetGpio
-
-#Wait again
-mov r2,#0x3F0000
-wait2$:
-sub r2, #1
-cmp r2, #0
-bne wait2$
-
 b loop$
 
 .unreq pinNum
 .unreq pinVal
+
+
+.section .data
+.align 2
+pattern:
+.int 0b11111111101010100010001000101010
 
